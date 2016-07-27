@@ -6,9 +6,18 @@ Version: 1.0
 Author: Kiran Dash
 Plugin URI: http://bgwebagency.com
 */
-add_action('admin_menu', function(){
-	add_options_page('Theme Options','Theme Options','administrator',__FILE__, function(){
-		//__FILE__ is used as id which returns the path to the page
+
+class KD_Options {
+	
+	public function __construct(){
+		
+	}
+	
+	public function add_menu_page(){
+		add_options_page('Theme Options','Theme Options','administrator',__FILE__, array('KD_Options'),'display_options_page');	
+	}
+	
+	public function display_options_page(){
 		?>
 		<div class="wrap">
             <h2>My theme Options</h2>
@@ -16,7 +25,12 @@ add_action('admin_menu', function(){
             	<input>
             </form>
         </div>
-		<?php	
-	});
+		<?php				
+	}
+	
+}
+
+add_action('admin_menu', function(){
+	KD_Options::add_menu_page();
 });
 ?>
