@@ -9,7 +9,10 @@ Plugin URI: http://bgwebagency.com
 
 class KD_Options {
 	
+	public $options;
+	
 	public function __construct(){
+		$this->options = get_option('kd_plugin_options');
 		$this->register_settings_and_fields();
 	}
 	
@@ -21,6 +24,11 @@ class KD_Options {
 		?>
 		<div class="wrap">
             <h2>My theme Options</h2>
+            <?php /*$o = get_option('kd_plugin_options'); 
+			echo '<pre>';
+			print_r($o);
+			echo '</pre>'; */
+			?>
             <form method="post" action="options.php" enctype="multipart/form-data">
             	<?php settings_fields('kd_plugin_options');//includes all the hidden fields for security ?>
                 <?php do_settings_sections(__FILE__); ?>
@@ -49,7 +57,7 @@ class KD_Options {
 	 
 	 // Banner Heading
 	 public function kd_banner_heading_setting() {
-		 echo '<input>';
+		 echo "<input name='kd_plugin_options[kd_banner_heading]' type='text' value='{$this->options['kd_banner_heading']}'>";
 	 }
 
 	 // Logo
