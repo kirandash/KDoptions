@@ -12,6 +12,7 @@ class KD_Options {
 	public $options;
 	
 	public function __construct(){
+		//delete_option('kd_plugin_options');//To remove Uninitialized string offset: 0  error
 		$this->options = get_option('kd_plugin_options');
 		$this->register_settings_and_fields();
 	}
@@ -42,7 +43,7 @@ class KD_Options {
 	}
 	
 	public function register_settings_and_fields(){
-		register_setting('kd_plugin_options','kd_plugin_options');//3rd parameter = optional cb
+		register_setting('kd_plugin_options','kd_plugin_options', array($this,'kd_validate_settings'));//3rd parameter = optional cb
 		//get_option('kd_plugin_options');	
 		add_settings_section('kd_main_section', 'Main Settings', array($this, 'kd_main_section_cb'), __FILE__);//id, title of section, cb, which page?
 		add_settings_field('kd_banner_heading','Banner Heading', array($this, 'kd_banner_heading_setting'), __FILE__, 'kd_main_section');
@@ -62,12 +63,27 @@ class KD_Options {
 
 	 // Logo
 	 public function kd_logo_setting() {
-		 echo '<input type="file">';
+		 echo '<input type="file" name="kd_logo_upload"><br><br>';
+		 if(isset($this->options['kd_logo'])) {
+			echo "<img src='{$this->options['kd_logo']}' alt='logo image'/>"; 
+		 }		 
 	 }
 	 	 
 	 //Function for validation and sanitization
 	 public function kd_main_section_cb(){
 		 //optional
+	 }
+	 
+	 public function kd_validate_settings($plugin_options){
+		 //Add validation later to check if input file is an image
+		 if(!empty($_FILES['kd_logo_upload']['tmp_name'])) {
+			 $override = array('test_form'=>false);
+			 $file = wp_handle_upload($_FILES['kd_logo_upload'], $override);
+			 $plugin_options['kd_logo'] = $file['url'];
+		 }else{
+			 $plugin_options['kd_logo'] = $this->options['kd_logo'];
+		 }
+		 return $plugin_options;
 	 }
 	
 }
