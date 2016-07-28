@@ -108,4 +108,10 @@ add_action('admin_init', function(){
 	new KD_Options();
 });
 
+/* To echo the files in html 
+$o = get_option('kd_plugin_options');
+print_r($o);
+echo $o['kd_banner_heading'];
+*/
+
 ?>
