@@ -24,6 +24,10 @@ class KD_Options {
             <form method="post" action="options.php" enctype="multipart/form-data">
             	<?php settings_fields('kd_plugin_options');//includes all the hidden fields for security ?>
                 <?php do_settings_sections(__FILE__); ?>
+                
+                <p class="submit">
+                	<input name="submit" type="submit" class="button-primary" value="Save Changes">
+                </p>
             </form>
         </div>
 		<?php				
