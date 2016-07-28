@@ -48,6 +48,7 @@ class KD_Options {
 		add_settings_section('kd_main_section', 'Main Settings', array($this, 'kd_main_section_cb'), __FILE__);//id, title of section, cb, which page?
 		add_settings_field('kd_banner_heading','Banner Heading', array($this, 'kd_banner_heading_setting'), __FILE__, 'kd_main_section');
 		add_settings_field('kd_logo','Your Logo: ', array($this, 'kd_logo_setting'), __FILE__, 'kd_main_section');
+		add_settings_field('kd_color_scheme','Your Desired color scheme: ', array($this, 'kd_color_scheme_setting'), __FILE__, 'kd_main_section');
 	}
 	
 	/*
@@ -61,15 +62,26 @@ class KD_Options {
 		 echo "<input name='kd_plugin_options[kd_banner_heading]' type='text' value='{$this->options['kd_banner_heading']}'>";
 	 }
 
-	 // Logo
+	 // Logo upload
 	 public function kd_logo_setting() {
 		 echo '<input type="file" name="kd_logo_upload"><br><br>';
 		 if(isset($this->options['kd_logo'])) {
 			echo "<img src='{$this->options['kd_logo']}' alt='logo image'/>"; 
 		 }		 
 	 }
-	 	 
-	 //Function for validation and sanitization
+	 
+	 // Color scheme
+	 public function kd_color_scheme_setting(){
+		$items = array('Red','Green','Blue','Yellow','Black','White');
+		echo "<select name='kd_plugin_options[kd_color_scheme]'>"; 
+		foreach($items as $item){
+			$selected = ($this->options['kd_color_scheme'] === $item ? 'selected="selected"':'');
+			echo "<option value='$item' $selected>$item</option>";
+		}
+		echo "</select>";
+	 }
+	  
+	 // Function for validation and sanitization
 	 public function kd_main_section_cb(){
 		 //optional
 	 }
