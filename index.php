@@ -14,7 +14,7 @@ class KD_Options {
 	}
 	
 	public function add_menu_page(){
-		add_options_page('Theme Options','Theme Options','administrator',__FILE__, array('KD_Options'),'display_options_page');	
+		add_options_page('Theme Options','Theme Options','administrator',__FILE__, array('KD_Options','display_options_page'));	
 	}
 	
 	public function display_options_page(){
